@@ -9,7 +9,6 @@ public class LoanCalc {
     // interest rate (double, as a percentage), and number of payments (int).  
 	public static void main(String[] args) {		
 		// Gets the loan data
-		System.out.println(endBalance(100000, 5,10,10000));
 		double loan = Double.parseDouble(args[0]);
 		double rate = Double.parseDouble(args[1]);
 		int n = Integer.parseInt(args[2]);
@@ -30,13 +29,12 @@ public class LoanCalc {
 	// Computes the ending balance of a loan, given the loan amount, the periodical
 	// interest rate (as a percentage), the number of periods (n), and the periodical payment.
 	private static double endBalance(double loan, double rate, int n, double payment) {	
-		double total = loan;
-		rate = 1 + rate/100;
-		for(int i = 0; i<n; i++){
-			total = (loan-payment)*rate;
-			loan = total;
-		}
-		return total;
+		 double total = loan;
+        rate = 1 + rate / 100;
+        for (int i = 0; i < n; i++) {
+            total = total * rate - payment;
+        }
+        return total;
 	}
 	
 	// Uses sequential search to compute an approximation of the periodical payment
