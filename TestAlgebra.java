@@ -67,7 +67,6 @@ public class TestAlgebra {
         
         boolean test5 = Algebra.minus(-5, -3) == -2;
         System.out.println("Test 5 (negative numbers): " + (test5 ? "PASS" : "FAIL"));
-        
         boolean test6 = Algebra.minus(Integer.MIN_VALUE + 1, 1) == Integer.MIN_VALUE;
         System.out.println("Test 6 (min value): " + (test6 ? "PASS" : "FAIL"));
 
@@ -108,7 +107,6 @@ public class TestAlgebra {
     private static int testPow() {
         System.out.println("\nTesting power operations:");
         totalTests += 6;
-        
         boolean test1 = Algebra.pow(5, 3) == 125;
         System.out.println("Test 1 (basic power): " + (test1 ? "PASS" : "FAIL"));
         
@@ -134,7 +132,7 @@ public class TestAlgebra {
     }
 
     private static int testDiv() {
-        System.out.println("\nTesting division operations:");
+       System.out.println("\nTesting division operations:");
         totalTests += 6;
         
         boolean test1 = Algebra.div(12, 3) == 4;
@@ -155,7 +153,7 @@ public class TestAlgebra {
         boolean test6 = Algebra.div(-15, -3) == 5;
         System.out.println("Test 6 (negative numbers): " + (test6 ? "PASS" : "FAIL"));
 
-        int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + (test3 ? 1 : 0) + 
+       int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + (test3 ? 1 : 0) + 
                     (test4 ? 1 : 0) + (test5 ? 1 : 0) + (test6 ? 1 : 0);
         passedTests += passed;
         return passed;
