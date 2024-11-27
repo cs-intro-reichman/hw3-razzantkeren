@@ -74,8 +74,6 @@ public class TestAnagram {
         // Test case 1: Check if result is an anagram
         String original = "hello";
         String randomized = Anagram.randomAnagram(original);
-        System.out.println(randomized);
-
         boolean test1 = Anagram.isAnagram(original, randomized);
         System.out.println("Test 1 (is anagram): " + (test1 ? "PASS" : "FAIL"));
         
