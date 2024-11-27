@@ -10,7 +10,7 @@ public class LoanCalc {
 	public static void main(String[] args) {		
 		// Gets the loan data
 		System.out.println(endBalance(100000, 5,10,10000));
-		/*double loan = Double.parseDouble(args[0]);
+		double loan = Double.parseDouble(args[0]);
 		double rate = Double.parseDouble(args[1]);
 		int n = Integer.parseInt(args[2]);
 		System.out.println("Loan = " + loan + ", interest rate = " + rate + "%, periods = " + n);
@@ -23,7 +23,7 @@ public class LoanCalc {
 		// Computes the periodical payment using bisection search
 		System.out.print("\nPeriodical payment, using bi-section search: ");
 		System.out.println((int) bisectionSolver(loan, rate, n, epsilon));
-		System.out.println("number of iterations: " + iterationCounter);*/
+		System.out.println("number of iterations: " + iterationCounter);
 
 	}
 
