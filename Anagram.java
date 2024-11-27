@@ -33,8 +33,6 @@ public class Anagram {
 		str2 = preProcess(str2);
 		str1 = prespace(str1);
 		str2=prespace(str2);
-		System.out.println(str1);
-		System.out.println(str2);
 		int counter = 0;
 		if (str1.length()!=str2.length()) {
 			return false;
@@ -93,15 +91,15 @@ public class Anagram {
 	// Returns a random anagram of the given string. The random anagram consists of the same
 	// characters as the given string, re-arranged in a random order. 
 	public static String randomAnagram(String str) {
-		int index1 = (int)(Math.random()*str.length()+1);
-		int index2 = (int)(Math.random()*str.length()+1);
-		if (index1<str.length()&&index2<str.length()) {
-			char firstletter = str.charAt(index1);
-			char secondetletter = str.charAt(index2);
-			String newstring = str.replace(firstletter, secondetletter); 		
-			return newstring;
+		str = preProcess(str);
+		str = prespace(str);
+		String returnstring = "";
+		while (0<str.length()) {
+			int randomChar = (int) (Math.random() * str.length());
+			returnstring = returnstring + str.charAt(randomChar);
+			str = str.substring(0, randomChar) + str.substring(randomChar + 1);
 		}
-		return "";
+		return returnstring;
 		
 	}
 }
