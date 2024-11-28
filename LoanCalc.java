@@ -78,7 +78,7 @@ public class LoanCalc {
 			else{
 				l = num;
 			}
-            num = 0.5*(l + g);
+            num = 0.5*(l + 1);
             iterationCounter++;
         }
         return num;
