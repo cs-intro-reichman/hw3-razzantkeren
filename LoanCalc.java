@@ -23,13 +23,19 @@ public class LoanCalc {
 		System.out.print("\nPeriodical payment, using bi-section search: ");
 		System.out.println((int) bisectionSolver(loan, rate, n, epsilon));
 		System.out.println("number of iterations: " + iterationCounter);
+
 	}
 
 	// Computes the ending balance of a loan, given the loan amount, the periodical
 	// interest rate (as a percentage), the number of periods (n), and the periodical payment.
 	private static double endBalance(double loan, double rate, int n, double payment) {	
-		// Replace the following statement with your code
-		return 0;
+		int i = 0;
+		rate=rate/100;
+		for(i = 0; i < n; i++){
+			loan=(loan - payment)*(1+rate);
+		}
+
+		return loan;
 	}
 	
 	// Uses sequential search to compute an approximation of the periodical payment
@@ -38,17 +44,35 @@ public class LoanCalc {
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
-		// Replace the following statement with your code
-		return 0;
-    }
+        iterationCounter = 0;
+        double c = loan / n;
+        while ((endBalance(loan, rate, n, c))> epsilon) {
+            c+= epsilon;
+            iterationCounter++;
+        }
+        return c;
+	}
     
     // Uses bisection search to compute an approximation of the periodical payment 
 	// that will bring the ending balance of a loan close to 0.
 	// Given: the sum of the loan, the periodical interest rate (as a percentage),
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
-    public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
+ public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
         // Replace the following statement with your code
-		return 0;
+        iterationCounter = 0;
+        double l = 0;
+        double n1 = loan; 
+        double index = 0.5 * (n1 + l);
+        while (n1 - l > epsilon) {
+            if (endBalance(loan, rate, n, index) * endBalance(loan, rate, n, l) > 0) {
+                l = index;
+            } else {
+                n1 = index;
+            }
+            index = 0.5 * (n1 + l);
+            iterationCounter++;
+        }
+        return index;
     }
-}
+	}
