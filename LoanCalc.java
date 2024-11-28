@@ -44,24 +44,28 @@ public class LoanCalc {
 	// Side effect: modifies the class variable iterationCounter.
 	public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
 		iterationCounter = 0;
-		double g = loan / n;  // Initial guess
+		double g = loan / n;  // Initial guess for the payment
 		double b;  // Balance after each payment
+		double prevG = 0;  // Previous payment value to detect small changes
 		double maxIterations = 1000000;  // Maximum allowed iterations
 		
 		// Brute force search loop
 		while (iterationCounter < maxIterations) {
 			b = endBalance(loan, rate, n, g);  // Get the end balance for the current payment
-			if (Math.abs(b) <= epsilon) {  // If balance is close enough to zero
+			
+			// Stop if the balance is within epsilon of zero or if the payment change is insignificant
+			if (Math.abs(b) <= epsilon || Math.abs(g - prevG) <= epsilon) {
 				break;
 			}
 			
-			// Adjust payment based on balance (positive balance means we need to increase payment)
+			// Adjust payment based on the balance
 			if (b > 0) {
 				g += epsilon;  // Increase payment if the balance is positive
 			} else {
 				g -= epsilon;  // Decrease payment if the balance is negative (unlikely, but handled)
 			}
 			
+			prevG = g;  // Store the previous payment value
 			iterationCounter++;
 		}
 	
@@ -71,6 +75,7 @@ public class LoanCalc {
 	
 		return g;
 	}
+	
 	
     
     // Uses bisection search to compute an approximation of the periodical payment 
