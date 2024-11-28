@@ -42,20 +42,36 @@ public class LoanCalc {
 	// Given: the sum of the loan, the periodical interest rate (as a percentage),
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
-    public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
+	public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
 		iterationCounter = 0;
-        double g = loan / n;
-		double b;
-        while (g <= loan) {
-			b = endBalance(loan, rate, n, g);
-			if (b<=epsilon) {
+		double g = loan / n;  // Initial guess
+		double b;  // Balance after each payment
+		double maxIterations = 1000000;  // Maximum allowed iterations
+		
+		// Brute force search loop
+		while (iterationCounter < maxIterations) {
+			b = endBalance(loan, rate, n, g);  // Get the end balance for the current payment
+			if (Math.abs(b) <= epsilon) {  // If balance is close enough to zero
 				break;
 			}
-            g+= epsilon;
-            iterationCounter++;
-        }
-        return g;
-    }
+			
+			// Adjust payment based on balance (positive balance means we need to increase payment)
+			if (b > 0) {
+				g += epsilon;  // Increase payment if the balance is positive
+			} else {
+				g -= epsilon;  // Decrease payment if the balance is negative (unlikely, but handled)
+			}
+			
+			iterationCounter++;
+		}
+	
+		if (iterationCounter >= maxIterations) {
+			System.out.println("Brute force solver exceeded maximum iterations.");
+		}
+	
+		return g;
+	}
+	
     
     // Uses bisection search to compute an approximation of the periodical payment 
 	// that will bring the ending balance of a loan close to 0.
