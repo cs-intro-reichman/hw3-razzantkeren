@@ -1,4 +1,3 @@
-// Computes the periodical payment necessary to pay a given loan.
 public class LoanCalc {
 	
 	static double epsilon = 0.001;  // Approximation accuracy
@@ -29,12 +28,12 @@ public class LoanCalc {
 	// Computes the ending balance of a loan, given the loan amount, the periodical
 	// interest rate (as a percentage), the number of periods (n), and the periodical payment.
 	private static double endBalance(double loan, double rate, int n, double payment) {	
-		double total = loan;
-        rate = 1 + rate / 100;
-        for (int i = 0; i < n; i++) {
-            total = total * rate - payment;
-        }
-        return total;
+		int i = 0;
+		rate=rate/100;
+		for(i = 0;i<n; i++){
+			loan=(loan - payment)*(1+rate);
+			}
+		return loan;
 	}
 	
 	// Uses sequential search to compute an approximation of the periodical payment
@@ -42,19 +41,16 @@ public class LoanCalc {
 	// Given: the sum of the loan, the periodical interest rate (as a percentage),
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
-	public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
-		iterationCounter = 0;
-		double g = loan / n;  
-		while (endBalance(loan, rate, n, g)>epsilon) {
-			g+=epsilon;
-			iterationCounter++;
-			
-		}
-		return g;
-		
-	}
-	
-	
+    public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
+       iterationCounter=0;
+	   double f = loan/n;
+	   while(Math.abs(endBalance(loan, rate, n, f))>epsilon)
+	   {
+		f+=epsilon;
+		iterationCounter++;
+	   }
+		return f;
+    }
     
     // Uses bisection search to compute an approximation of the periodical payment 
 	// that will bring the ending balance of a loan close to 0.
@@ -62,25 +58,20 @@ public class LoanCalc {
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
-        iterationCounter = 0;
-        double l = loan; 
-        double num = 0.5 * (l + 1);
-		double f =0 ;
-		double balance;
-        while (l - f > epsilon) {
-			balance = endBalance(loan, rate, n, num);
-            if (Math.abs(balance)<=0) {
-				break;
-            }
-			if (balance>0) {
-				f = num;
+		iterationCounter = 0;
+		double f = loan/n;
+		double loan1 = loan; 
+		 double i = 0.5*(loan1+f);
+		while(loan1-f > epsilon) {
+			if(endBalance(loan, rate, n, i)*endBalance(loan, rate, n, f)>0) {
+				f = i;
+				i = 0.5*(loan1 + f);
+			} else {
+				loan1 = i;
+				i = 0.5*(loan1 + f);
 			}
-			else{
-				l = num;
-			}
-            num = 0.5*(l + 1);
-            iterationCounter++;
-        }
-        return num;
+			iterationCounter++;
+		}
+		return i;
     }
 }
